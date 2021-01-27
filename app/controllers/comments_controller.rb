@@ -1,20 +1,24 @@
 class CommentsController < ApplicationController
     # before_action :find_comment, only: [:new, :index]
-    before_action :find_user
+    # before_action :find_user
 
     def new
         # if @brand = Brand.find_by_id(params[:brand_id]) 
         #     @comment = @brand.comments.build 
         # else
-            @comment = Comment.new 
+            if params[:brand_id]
+                @brand = Brand.find_by_id(params[:brand_id])
+                @comments = @brand.comments
+            else
+                @comment = Comment.new 
             # @comment.user = current_user 
-        # end 
+        end 
     end  
 
     def create
-        @brand = Brand.find_by(id: params[:brand_id]) 
-        @comment = @brand.comments.build(comment_params) 
-        @comment.user = current_user 
+        @comment = Comment.new(comment_params) 
+        binding.pry
+        # @comment.user_id = current_user 
         # binding.pry
          if @comment.save # returns the same true or false as .valid 
              redirect_to comment_path(@comment)

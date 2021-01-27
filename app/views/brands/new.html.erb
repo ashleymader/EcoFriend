@@ -17,9 +17,10 @@
         <%= f.file_field :image %>
         <br><br> 
 
-        <%= f.fields_for :comments, Comment.new do |c| %>
+        <%= f.fields_for :comments do|c| %>
         <%= c.label :review %>
         <%= c.text_area :review %><br>
+        <%= c.hidden_field :user_id, :value => @user.id %>
         <% end %>
        
     <%= f.submit %>
